@@ -1,0 +1,14 @@
+package com.example.mangaread.firebase;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
+public class FirebaseManager {
+
+    public static FirebaseAuth auth =
+            FirebaseAuth.getInstance();
+
+    public static FirebaseDatabase database =
+            FirebaseDatabase.getInstance();
+
+}
