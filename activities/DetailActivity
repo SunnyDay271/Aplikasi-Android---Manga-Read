@@ -1,0 +1,125 @@
+package com.example.mangaread.activities;
+
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
+import com.example.mangaread.R;
+
+public class DetailActivity
+        extends AppCompatActivity {
+
+    ImageView detailImage;
+
+    TextView detailTitle;
+    TextView detailDescription;
+    TextView detailScore;
+    TextView detailChapters;
+    TextView detailMembers;
+
+    Button readMoreButton;
+
+    String mangaUrl;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_detail);
+
+        detailImage =
+                findViewById(R.id.detailImage);
+
+        detailTitle =
+                findViewById(R.id.detailTitle);
+
+        detailDescription =
+                findViewById(R.id.detailDescription);
+
+        detailScore =
+                findViewById(R.id.detailScore);
+
+        detailChapters =
+                findViewById(R.id.detailChapters);
+
+        detailMembers =
+                findViewById(R.id.detailMembers);
+
+        readMoreButton =
+                findViewById(R.id.readMoreButton);
+
+        String title =
+                getIntent().getStringExtra("title");
+
+        String image =
+                getIntent().getStringExtra("image");
+
+        String description =
+                getIntent().getStringExtra("description");
+
+        double score =
+                getIntent().getDoubleExtra(
+                        "score",
+                        0
+                );
+
+        int chapters =
+                getIntent().getIntExtra(
+                        "chapters",
+                        0
+                );
+
+        int members =
+                getIntent().getIntExtra(
+                        "members",
+                        0
+                );
+
+        mangaUrl =
+                getIntent().getStringExtra("url");
+
+        detailTitle.setText(title);
+
+        detailDescription.setText(description);
+
+        detailScore.setText(
+                "⭐ Score: " + score
+        );
+
+        detailChapters.setText(
+                "📚 Chapters: " + chapters
+        );
+
+        detailMembers.setText(
+                "🔥 Members: " + members
+        );
+
+        Glide.with(this)
+                .load(image)
+                .into(detailImage);
+
+        readMoreButton.setOnClickListener(v -> {
+
+            Intent intent =
+                    new Intent(
+                            DetailActivity.this,
+                            WebViewActivity.class
+                    );
+
+            intent.putExtra(
+                    "url",
+                    mangaUrl
+            );
+
+            startActivity(intent);
+
+        });
+
+    }
+}
