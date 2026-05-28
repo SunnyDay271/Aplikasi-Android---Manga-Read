@@ -1,0 +1,99 @@
+package com.example.mangaread.activities;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mangaread.R;
+import com.google.firebase.auth.FirebaseAuth;
+
+public class RegisterActivity
+        extends AppCompatActivity {
+
+    EditText registerEmail;
+    EditText registerPassword;
+
+    Button registerButton;
+    Button backLoginButton;
+
+    FirebaseAuth auth;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_register);
+
+        registerEmail =
+                findViewById(R.id.registerEmail);
+
+        registerPassword =
+                findViewById(R.id.registerPassword);
+
+        registerButton =
+                findViewById(R.id.registerButton);
+
+        backLoginButton =
+                findViewById(R.id.backLoginButton);
+
+        auth = FirebaseAuth.getInstance();
+
+        // REGISTER ACCOUNT
+        registerButton.setOnClickListener(v -> {
+
+            String email =
+                    registerEmail.getText().toString();
+
+            String password =
+                    registerPassword.getText().toString();
+
+            auth.createUserWithEmailAndPassword(
+                    email,
+                    password
+            ).addOnCompleteListener(task -> {
+
+                if(task.isSuccessful()) {
+
+                    Toast.makeText(
+                            this,
+                            "Register Success",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    finish();
+
+                } else {
+
+                    Toast.makeText(
+                            this,
+                            task.getException().getMessage(),
+                            Toast.LENGTH_LONG
+                    ).show();
+
+                }
+
+            });
+
+        });
+
+        // BACK TO LOGIN
+        backLoginButton.setOnClickListener(v -> {
+
+            Intent intent =
+                    new Intent(
+                            RegisterActivity.this,
+                            LoginActivity.class
+                    );
+
+            startActivity(intent);
+
+            finish();
+
+        });
+
+    }
+}
