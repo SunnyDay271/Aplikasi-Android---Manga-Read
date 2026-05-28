@@ -1,0 +1,100 @@
+package com.example.mangaread.activities;
+
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mangaread.activities.MainActivity;
+import com.example.mangaread.R;
+import com.google.firebase.auth.FirebaseAuth;
+
+public class LoginActivity
+        extends AppCompatActivity {
+
+    EditText emailInput;
+    EditText passwordInput;
+
+    Button loginButton;
+    Button registerPageButton;
+
+    FirebaseAuth auth;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_login);
+
+        emailInput =
+                findViewById(R.id.emailInput);
+
+        passwordInput =
+                findViewById(R.id.passwordInput);
+
+        loginButton =
+                findViewById(R.id.loginButton);
+
+        registerPageButton =
+                findViewById(R.id.registerPageButton);
+
+        auth = FirebaseAuth.getInstance();
+
+        // LOGIN
+        loginButton.setOnClickListener(v -> {
+
+            String email =
+                    emailInput.getText().toString();
+
+            String password =
+                    passwordInput.getText().toString();
+
+            auth.signInWithEmailAndPassword(
+                    email,
+                    password
+            ).addOnCompleteListener(task -> {
+
+                if(task.isSuccessful()) {
+
+                    startActivity(
+                            new Intent(
+                                    this,
+                                    MainActivity.class
+                            )
+                    );
+
+                    finish();
+
+                } else {
+
+                    Toast.makeText(
+                            this,
+                            "Login Failed",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                }
+
+            });
+
+        });
+
+        // GO TO REGISTER PAGE
+        registerPageButton.setOnClickListener(v -> {
+
+            Intent intent =
+                    new Intent(
+                            LoginActivity.this,
+                            RegisterActivity.class
+                    );
+
+            startActivity(intent);
+
+        });
+
+    }
+}
