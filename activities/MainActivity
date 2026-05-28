@@ -1,0 +1,108 @@
+package com.example.mangaread.activities;
+
+import android.os.Bundle;
+import com.bumptech.glide.Glide;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mangaread.R;
+import com.example.mangaread.adapters.MangaAdapter;
+import com.example.mangaread.models.Manga;
+
+import android.widget.ImageView;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity
+        extends AppCompatActivity {
+
+    RecyclerView recyclerView;
+    ImageView bannerImage;
+    MangaAdapter adapter;
+
+    List<Manga> mangaList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+
+        bannerImage =
+                findViewById(R.id.bannerImage);
+
+        Glide.with(this)
+                .load("https://cdn.myanimelist.net/images/anime/1208/94745.jpg")
+                .into(bannerImage);
+
+        recyclerView =
+                findViewById(R.id.recyclerView);
+
+        recyclerView.setLayoutManager(
+                new GridLayoutManager(this, 2));
+
+        mangaList = new ArrayList<>();
+
+        mangaList.add(new Manga(
+
+                "Solo Leveling",
+
+                "https://cdn.myanimelist.net/images/manga/3/222295.jpg",
+
+                "https://myanimelist.net/manga/121496/Solo_Leveling",
+
+                "The weakest hunter Sung Jin-Woo gains a mysterious system that allows him to level up infinitely after surviving a deadly dungeon.",
+
+                8.72,
+
+                200,
+
+                2100000
+
+        ));
+
+        mangaList.add(new Manga(
+
+                "One Piece",
+
+                "https://cdn.myanimelist.net/images/manga/2/253146.jpg",
+
+                "https://myanimelist.net/manga/13/One_Piece",
+
+                "Monkey D. Luffy sails across the Grand Line with his crew in search of the legendary treasure known as One Piece.",
+
+                9.22,
+
+                1100,
+
+                3200000
+
+        ));
+
+        mangaList.add(new Manga(
+
+                "Naruto",
+
+                "https://cdn.myanimelist.net/images/manga/3/117681.jpg",
+
+                "https://myanimelist.net/manga/11/Naruto",
+
+                "Naruto Uzumaki dreams of becoming Hokage while carrying the burden of the Nine-Tailed Fox sealed inside him.",
+
+                8.01,
+
+                700,
+
+                1900000
+
+        ));
+
+        adapter =
+                new MangaAdapter(this,
+                        mangaList);
+
+        recyclerView.setAdapter(adapter);
+    }
+}
