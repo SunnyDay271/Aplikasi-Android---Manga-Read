@@ -1,0 +1,67 @@
+package com.example.mangaread.models;
+
+public class Manga {
+
+    private String title;
+    private String imageUrl;
+    private String url;
+
+    private String description;
+
+    private double score;
+
+    private int chapters;
+
+    private int members;
+
+    public Manga(
+            String title,
+            String imageUrl,
+            String url,
+            String description,
+            double score,
+            int chapters,
+            int members
+    ) {
+
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.url = url;
+
+        this.description = description;
+
+        this.score = score;
+
+        this.chapters = chapters;
+
+        this.members = members;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public int getChapters() {
+        return chapters;
+    }
+
+    public int getMembers() {
+        return members;
+    }
+}
