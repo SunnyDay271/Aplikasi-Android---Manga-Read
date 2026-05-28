@@ -1,0 +1,137 @@
+package com.example.mangaread.adapters;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.example.mangaread.R;
+
+import android.content.Intent;
+
+import com.example.mangaread.activities.DetailActivity;
+
+import com.example.mangaread.activities.WebViewActivity;
+import com.example.mangaread.models.Manga;
+
+import java.util.List;
+
+public class MangaAdapter
+        extends RecyclerView.Adapter<MangaAdapter.ViewHolder> {
+
+    Context context;
+    List<Manga> mangaList;
+
+    public MangaAdapter(Context context,
+                        List<Manga> mangaList) {
+
+        this.context = context;
+        this.mangaList = mangaList;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(
+            ViewGroup parent,
+            int viewType) {
+
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.item_manga,
+                        parent,
+                        false);
+
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(
+            ViewHolder holder,
+            int position) {
+
+        Manga manga = mangaList.get(position);
+
+        holder.title.setText(manga.getTitle());
+
+        Glide.with(context)
+                .load(manga.getImageUrl())
+                .into(holder.image);
+
+        // CLICK EVENT HERE
+        holder.itemView.setOnClickListener(v -> {
+
+            Intent intent =
+                    new Intent(
+                            context,
+                            DetailActivity.class
+                    );
+
+            intent.putExtra(
+                    "title",
+                    manga.getTitle()
+            );
+
+            intent.putExtra(
+                    "image",
+                    manga.getImageUrl()
+            );
+
+            intent.putExtra(
+                    "url",
+                    manga.getUrl()
+            );
+
+            intent.putExtra(
+                    "description",
+                    manga.getDescription()
+            );
+
+            intent.putExtra(
+                    "score",
+                    manga.getScore()
+            );
+
+            intent.putExtra(
+                    "chapters",
+                    manga.getChapters()
+            );
+
+            intent.putExtra(
+                    "members",
+                    manga.getMembers()
+            );
+
+            context.startActivity(intent);
+
+        });
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return mangaList.size();
+    }
+
+    public static class ViewHolder
+            extends RecyclerView.ViewHolder {
+
+        ImageView image;
+        TextView title;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+
+            image =
+                    itemView.findViewById(
+                            R.id.mangaImage);
+
+            title =
+                    itemView.findViewById(
+                            R.id.mangaTitle);
+        }
+    }
+}
